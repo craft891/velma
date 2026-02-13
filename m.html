@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Overwriter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>HTML Content Replacer</h2>
+        <p>Upload an HTML file to overwrite this entire page.</p>
+        <input type="file" id="fileInput" accept=".html">
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            
+            if (file && file.type === "text/html" || file.name.endsWith('.html')) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const newHTML = e.target.result;
+
+                    // document.open() clears the current document
+                    document.open();
+                    // document.write() injects the new content
+                    document.write(newHTML);
+                    // document.close() finishes the loading process
+                    document.close();
+                };
+
+                reader.readAsText(file);
+            } else {
+                alert("Please upload a valid .html file.");
+            }
+        });
+    </script>
+
+</body>
+</html>
